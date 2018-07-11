@@ -58,3 +58,7 @@
 .statistics .row .label {
   font-weight: bold;
 }
+
+.error-message {
+  text-align: center;
+}

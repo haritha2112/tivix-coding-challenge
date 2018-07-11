@@ -6,7 +6,8 @@ export default class App extends Component {
   constructor() {
     super();
     this.state = {
-      weatherData: undefined
+      weatherData: undefined,
+      error: false,
     };
     this.getWeatherData = this.getWeatherData.bind(this);
   }
@@ -16,7 +17,11 @@ export default class App extends Component {
     fetch(`http://api.openweathermap.org/data/2.5/forecast?q=${city},${country}&appid=${apiKey}&units=metric`)
       .then(res => res.json())
       .then(data => {
-        this.setState({ weatherData: data })
+        data.cod === "200" ? (
+          this.setState({ weatherData: data, error: false })
+        ) : (
+          this.setState({ weatherData: undefined, error: true })
+        )
       });
   }
 
@@ -43,6 +48,11 @@ export default class App extends Component {
     return (
       <React.Fragment>
         <Form getWeatherData={this.getWeatherData}/>
+        {
+          this.state.error && (
+            <p className="error-message">Data for this location is unavailable.</p>
+          )
+        }
         {
           this.isWeatherDataFetched() && (
             <div className='statistics-container'>
