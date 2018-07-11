@@ -27,7 +27,10 @@ module.exports = {
     filename: 'bundle.js'
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.EnvironmentPlugin([
+      'API_KEY',
+    ])
   ],
   devServer: {
     contentBase: './',
